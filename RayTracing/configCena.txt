@@ -1,0 +1,36 @@
+file name
+configCena.txt
+
+//------- Initial environment configuration --------//
+/*------- Lightning --------*/
+//xyz xyzcor xyzcorobj
+light
+1.2 1.0 2.0
+1.0 1.0 1.0
+1.0 0.5 0.31
+
+/*------- Camera --------*/
+//upVec lookAt eyeLine
+camera
+0.0 1.0 2.0
+0.0 0.0 3.0
+0.0 0.0 -1.0
+
+/*------- Projection --------*/
+projection 
+45.0 1.33 0.1 100.0
+
+/*------- Transformations -------*/
+//rotation angle translation scale
+transformations
+0.0 0.5 0.0 0.1
+0.1 0.2 0.3
+0.25 0.25 0.25
+
+//------- Objects and Animations --------------------//
+//name nameMTL rotation/continuous? translation/continuous? scale/continuous? animation
+objects
+Pikachus/Pikachu.obj
+Pikachus/Pikachu.mtl
+
+//-------------------------------------------------- //
