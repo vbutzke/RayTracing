@@ -5,7 +5,7 @@
 #include "Shader.h"
 #include "scene.h"
 #include "SceneWriter.h"
-#include "SceneReader.h"
+//#include "Filter.h"
 
 class model
 {
@@ -14,7 +14,7 @@ public:
 	void addMesh(mesh mesh);
 	void addMTL(mtl mtl);
 	void performMtlLightning(string mtlName, Shader* shader);
-	void draw(scene scene);// GLFWwindow* window, GLuint WIDTH, GLuint HEIGHT, glm::vec3 eyeLine, scene scene);
+	void draw(scene scene);
 	void terminate();
 	glm::mat4 processInput(GLFWwindow* window, glm::vec3 eyeLine);
 	static void mouse_callback(GLFWwindow* window, double xpos, double ypos);

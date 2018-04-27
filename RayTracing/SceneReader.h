@@ -27,7 +27,7 @@ public:
 	scene readConfigFile(string filename, model* modelObj);
 	void read(string fileName, model* modelObj);
 	void readMTL(string fileName, model* modelObj);
-	//void readBMP(GLuint& width, GLuint& height, unsigned char* pixels, string path);
+	void readBMP(GLuint& width, GLuint& height, unsigned char* pixels, string path);
 	~SceneReader();
 
 private:

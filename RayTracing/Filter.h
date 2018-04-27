@@ -2,13 +2,14 @@
 
 #include <GL/glew.h>
 #include "rhostring.hpp"
+#include "SceneReader.h"
 
 class Filter
 {
 public:
 	Filter();
 	void createFilter(vector< vector<double> >& filter);
-	void applyFilter(GLuint width, GLuint height, unsigned char* pixels);
+	void applyFilter(GLuint& width, GLuint& height, unsigned char* pixels, string path);
 	~Filter();
 
 private:

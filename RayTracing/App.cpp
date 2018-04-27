@@ -19,6 +19,9 @@
 
 using namespace std;
 
+//SceneWriter writer;
+//SceneReader reader;
+
 int main() {
 
 	model modelObj;

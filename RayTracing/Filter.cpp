@@ -6,7 +6,10 @@ Filter::Filter()
 
 
 
-void Filter::applyFilter(GLuint width, GLuint height, unsigned char* pixels) {
+void Filter::applyFilter(GLuint& width, GLuint& height, unsigned char* pixels, string path) {
+
+	//reader.readBMP(width, height, pixels, path);
+
 	////apply the filter
 	//for (int x = 0; x < w; x++)
 	//	for (int y = 0; y < h; y++)

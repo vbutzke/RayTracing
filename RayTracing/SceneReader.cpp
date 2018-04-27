@@ -250,7 +250,6 @@ void SceneReader::readMTL(string fileName, model* modelObj) {
 	}
 }
 
-/*
 void SceneReader::readBMP(GLuint& width, GLuint& height, unsigned char* pixels, string path) {
 
 	unsigned char* datBuff[2] = { nullptr, nullptr }; // Header buffers
@@ -294,7 +293,7 @@ void SceneReader::readBMP(GLuint& width, GLuint& height, unsigned char* pixels, 
 		height = bmpInfo->biHeight;
 	}
 }
-*/
+
 SceneReader::~SceneReader()
 {
 }

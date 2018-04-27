@@ -157,11 +157,11 @@ void model::terminate() {
 
 glm::mat4 model::processInput(GLFWwindow* window, glm::vec3 eyeLine) {
 	glm::mat4 model;
-	SceneReader reader;
 	SceneWriter writer;
+	//Filter filter;
 	string lastPath;
-	GLuint width;
-	GLuint height;
+	GLuint width = 800;
+	GLuint height = 600;
 	unsigned char* pixels;
 
 	if (glfwGetKey(window, GLFW_KEY_ESCAPE) == GLFW_PRESS)
@@ -211,24 +211,25 @@ glm::mat4 model::processInput(GLFWwindow* window, glm::vec3 eyeLine) {
 
 		//reader.readBMP(width, height, pixels, lastPath);
 		//aplica filtro
-		lastPath = writer.write("../../blur.bmp", height, width, pixels);
+		//filter.applyFilter(width, height, pixels, lastPath);
+		//lastPath = writer.write("../../blur.bmp", height, width, pixels);
 	}
 
 	if (glfwGetKey(window, GLFW_KEY_2) == GLFW_PRESS) {
-		lastPath = writer.write("../../motionBlur.bmp", height, width, pixels);
+		//lastPath = writer.write("../../motionBlur.bmp", height, width, pixels);
 	}
 
 
 	if (glfwGetKey(window, GLFW_KEY_3) == GLFW_PRESS) {
-		lastPath = writer.write("../../edges.bmp", height, width, pixels);
+		//lastPath = writer.write("../../edges.bmp", height, width, pixels);
 	}
 		
 	if (glfwGetKey(window, GLFW_KEY_4) == GLFW_PRESS) {
-		lastPath = writer.write("../../sharpen.bmp", height, width, pixels);
+		//lastPath = writer.write("../../sharpen.bmp", height, width, pixels);
 	}
 		
 	if (glfwGetKey(window, GLFW_KEY_5) == GLFW_PRESS) {
-		lastPath = writer.write("../../emboss.bmp", height, width, pixels);
+		//lastPath = writer.write("../../emboss.bmp", height, width, pixels);
 	}
 
 	return model;
