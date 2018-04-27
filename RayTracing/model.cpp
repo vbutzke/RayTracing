@@ -1,5 +1,4 @@
 #include "model.h"
-#include "SceneWriter.h"
 
 static glm::vec3 eyeLine;
 static bool firstMouse;
@@ -158,7 +157,13 @@ void model::terminate() {
 
 glm::mat4 model::processInput(GLFWwindow* window, glm::vec3 eyeLine) {
 	glm::mat4 model;
-	SceneWriter test;
+	SceneReader reader;
+	SceneWriter writer;
+	string lastPath;
+	GLuint width;
+	GLuint height;
+	unsigned char* pixels;
+
 	if (glfwGetKey(window, GLFW_KEY_ESCAPE) == GLFW_PRESS)
 		glfwSetWindowShouldClose(window, true);
 
@@ -199,9 +204,33 @@ glm::mat4 model::processInput(GLFWwindow* window, glm::vec3 eyeLine) {
 		model = glm::scale(model, glm::vec3(0.5f, 0.5f, 0.5f));
 
 	if (glfwGetKey(window, GLFW_KEY_ENTER) == GLFW_PRESS)
-		//printf("aaaaaa");
-		//glfwMakeContextCurrent(window);
-		test.test();
+		lastPath = writer.write("../../original.bmp");
+
+	//Filter
+	if (glfwGetKey(window, GLFW_KEY_1) == GLFW_PRESS) {
+
+		//reader.readBMP(width, height, pixels, lastPath);
+		//aplica filtro
+		lastPath = writer.write("../../blur.bmp", height, width, pixels);
+	}
+
+	if (glfwGetKey(window, GLFW_KEY_2) == GLFW_PRESS) {
+		lastPath = writer.write("../../motionBlur.bmp", height, width, pixels);
+	}
+
+
+	if (glfwGetKey(window, GLFW_KEY_3) == GLFW_PRESS) {
+		lastPath = writer.write("../../edges.bmp", height, width, pixels);
+	}
+		
+	if (glfwGetKey(window, GLFW_KEY_4) == GLFW_PRESS) {
+		lastPath = writer.write("../../sharpen.bmp", height, width, pixels);
+	}
+		
+	if (glfwGetKey(window, GLFW_KEY_5) == GLFW_PRESS) {
+		lastPath = writer.write("../../emboss.bmp", height, width, pixels);
+	}
+
 	return model;
 }
 

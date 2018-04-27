@@ -123,14 +123,12 @@ void SceneReader::read(string fileName, model* modelObj) {
 	string material;
 	bool readPrvsF = false;
 
-
 	vector<GLfloat> verticesObj;
 	vector<GLfloat> verticesNormais;
 	vector<GLfloat> verticesTexturas;
 	vector<GLuint> indicesNormais;
 	vector<GLuint> indicesObj;
 	vector<GLuint> indicesTexturas;
-
 
 	for (int i = 0; i < obj.size(); i++) {
 		if (obj[i] == "v") {
@@ -252,6 +250,51 @@ void SceneReader::readMTL(string fileName, model* modelObj) {
 	}
 }
 
+/*
+void SceneReader::readBMP(GLuint& width, GLuint& height, unsigned char* pixels, string path) {
+
+	unsigned char* datBuff[2] = { nullptr, nullptr }; // Header buffers
+
+	BITMAPFILEHEADER* bmpHeader = nullptr; // Header
+	BITMAPINFOHEADER* bmpInfo = nullptr; // Info
+
+	ifstream file(path);
+
+	if (!file) {
+		cout << "Not opened, try again";
+	}
+	else {
+		datBuff[0] = new unsigned char[sizeof(BITMAPFILEHEADER)];
+		datBuff[1] = new unsigned char[sizeof(BITMAPINFOHEADER)];
+
+		file.read((char*)datBuff[0], sizeof(BITMAPFILEHEADER));
+		file.read((char*)datBuff[1], sizeof(BITMAPINFOHEADER));
+
+		bmpHeader = (BITMAPFILEHEADER*)datBuff[0];
+		bmpInfo = (BITMAPINFOHEADER*)datBuff[1];
+
+		if (bmpHeader->bfType != 0x4D42) {
+			std::cout << "Oooops, não rolou a leitura do bmp";
+		}
+
+		pixels = new unsigned char[bmpInfo->biSizeImage];
+
+		// Go to where image data starts, then read in image data
+		file.seekg(bmpHeader->bfOffBits);
+		file.read((char*)pixels, bmpInfo->biSizeImage);
+
+		unsigned char tmpRGB = 0; // Swap buffer
+		for (unsigned long i = 0; i < bmpInfo->biSizeImage; i += 3) {
+			tmpRGB = pixels[i];
+			pixels[i] = pixels[i + 2];
+			pixels[i + 2] = tmpRGB;
+		}
+
+		width = bmpInfo->biWidth;
+		height = bmpInfo->biHeight;
+	}
+}
+*/
 SceneReader::~SceneReader()
 {
 }

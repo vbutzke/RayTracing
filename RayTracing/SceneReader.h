@@ -3,6 +3,7 @@
 #define SCENEHANDLER_H
 #include <GL/glew.h>
 #include <iostream>
+#include <Windows.h>
 #include <string>
 #include <algorithm>
 #include <assert.h>
@@ -16,8 +17,8 @@
 #include "mesh.h"
 #include "model.h"
 #include "scene.h"
-
 #include "SceneHandler.h"
+
 class SceneReader :
 	public SceneHandler
 {
@@ -26,6 +27,7 @@ public:
 	scene readConfigFile(string filename, model* modelObj);
 	void read(string fileName, model* modelObj);
 	void readMTL(string fileName, model* modelObj);
+	//void readBMP(GLuint& width, GLuint& height, unsigned char* pixels, string path);
 	~SceneReader();
 
 private:

@@ -4,6 +4,8 @@
 #include "mtl.h"
 #include "Shader.h"
 #include "scene.h"
+#include "SceneWriter.h"
+#include "SceneReader.h"
 
 class model
 {
