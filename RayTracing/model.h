@@ -5,7 +5,6 @@
 #include "Shader.h"
 #include "scene.h"
 #include "SceneWriter.h"
-//#include "Filter.h"
 
 class model
 {

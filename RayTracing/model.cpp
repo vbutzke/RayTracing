@@ -158,7 +158,6 @@ void model::terminate() {
 glm::mat4 model::processInput(GLFWwindow* window, glm::vec3 eyeLine) {
 	glm::mat4 model;
 	SceneWriter writer;
-	//Filter filter;
 	string lastPath;
 	GLuint width = 800;
 	GLuint height = 600;

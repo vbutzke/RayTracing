@@ -19,9 +19,6 @@
 
 using namespace std;
 
-//SceneWriter writer;
-//SceneReader reader;
-
 int main() {
 
 	model modelObj;
@@ -36,6 +33,10 @@ int main() {
 	}
 
 	modelObj.draw(scene);
+
+	//read
+	//filters
+	//write
 
 	modelObj.terminate();
 	glfwTerminate();
