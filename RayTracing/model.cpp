@@ -71,6 +71,8 @@ void model::performMtlLightning(string mtlName, Shader* shader) {
 void model::draw(scene scene){ 
 
 	GLFWwindow* window = init();
+	GLvoid* pixels;
+	RayTracing renderer;
 
 	Shader shader("../shaders/lighting.vs", "../shaders/lighting.frag");
 
@@ -139,6 +141,18 @@ void model::draw(scene scene){
 		glUniformMatrix4fv(modelLoc, 1, GL_FALSE, glm::value_ptr(model));
 		glUniformMatrix4fv(viewLoc, 1, GL_FALSE, glm::value_ptr(view));
 
+		glm::vec3 rayOrigin = glm::vec3(0.0f, 0.0f, -2.0f);
+
+		for (int i = 0; i < WIDTH; i++) {
+			for (int j = 0; j < HEIGHT; j++) {
+				glm::vec3 pixelColor;
+				GLint pixelColorLoc = glGetUniformLocation(shader.Program, "pixelColor");
+				glm::vec3 rayDirection = glm::vec3((float)i, (float)j, INFINITY);
+				renderer.render(rayOrigin, rayDirection, pixelColor);
+				glUniform3f(pixelColorLoc, pixelColor.x, pixelColor.y, pixelColor.z); //é pra desenhar...
+			}
+		}
+
 		for (size_t i = 0; i < meshes.size(); i++) {
 			performMtlLightning(meshes[i].getMTLName(), &shader);
 			meshes[i].draw(&shader, texture[i]);
@@ -146,7 +160,6 @@ void model::draw(scene scene){
 
 		glfwSwapBuffers(window);
 	}
-	
 }
 
 void model::terminate() {

@@ -5,6 +5,9 @@
 #include "Shader.h"
 #include "scene.h"
 #include "SceneWriter.h"
+#include "RayTracing.h"
+
+#define INFINITY 1e8
 
 class model
 {

@@ -19,6 +19,7 @@ uniform vec3 viewPos;
 uniform vec3 lightColor;
 uniform vec3 objectColor;
 uniform sampler2D texture1;
+uniform vec3 pixelColor;
 
 void main()
 {
@@ -37,7 +38,7 @@ void main()
     float spec = pow(max(dot(viewDir, reflectDir), 0.0), material.shininess);
     vec3 specular = lightColor * (spec * material.specular);  
         
-    vec3 result = (ambient + diffuse + specular) * objectColor;
+    vec3 result = (ambient + diffuse + specular) * objectColor * pixelColor;
     color = texture(texture1, TextCoord) * vec4(result, 1.0f);
 
 

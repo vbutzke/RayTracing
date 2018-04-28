@@ -131,6 +131,7 @@
     <ClInclude Include="model.h" />
     <ClInclude Include="mtl.h" />
     <ClInclude Include="obj.h" />
+    <ClInclude Include="RayTracing.h" />
     <ClInclude Include="rhostring.hpp" />
     <ClInclude Include="scene.h" />
     <ClInclude Include="SceneHandler.h" />
@@ -146,6 +147,7 @@
     <ClCompile Include="model.cpp" />
     <ClCompile Include="mtl.cpp" />
     <ClCompile Include="obj.cpp" />
+    <ClCompile Include="RayTracing.cpp" />
     <ClCompile Include="rhostring.cpp" />
     <ClCompile Include="scene.cpp" />
     <ClCompile Include="SceneHandler.cpp" />
