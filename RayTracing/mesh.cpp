@@ -111,6 +111,10 @@ void mesh::terminate() {
 	glDeleteBuffers(1, &VBOt);
 }
 
+vector<GLfloat> mesh::getVO() {
+	return vo;
+}
+
 mesh::~mesh()
 {
 }

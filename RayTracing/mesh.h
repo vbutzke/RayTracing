@@ -25,6 +25,7 @@ public:
 	void draw(Shader* shader, int texture);
 	string getMTLName();
 	void terminate();
+	vector<GLfloat> getVO();
 	~mesh();
 
 private:

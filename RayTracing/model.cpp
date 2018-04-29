@@ -142,17 +142,18 @@ void model::draw(scene scene){
 		glUniformMatrix4fv(viewLoc, 1, GL_FALSE, glm::value_ptr(view));
 
 		glm::vec3 rayOrigin = glm::vec3(0.0f, 0.0f, -2.0f);
+		int recursion = 0;
 
 		for (int i = 0; i < WIDTH; i++) {
 			for (int j = 0; j < HEIGHT; j++) {
-				glm::vec3 pixelColor;
+				glm::vec3 pixelColor = glm::vec3(1.0f, 1.0f, 1.0f);;
 				GLint pixelColorLoc = glGetUniformLocation(shader.Program, "pixelColor");
-				glm::vec3 rayDirection = glm::vec3((float)i, (float)j, INFINITY);
-				renderer.render(rayOrigin, rayDirection, pixelColor);
+				//glm::vec3 rayDirection = glm::vec3((float)i, (float)j, INFINITY);
+				//renderer.render(rayOrigin, rayDirection, pixelColor, meshes, recursion);
 				glUniform3f(pixelColorLoc, pixelColor.x, pixelColor.y, pixelColor.z); //é pra desenhar...
 			}
 		}
-
+		
 		for (size_t i = 0; i < meshes.size(); i++) {
 			performMtlLightning(meshes[i].getMTLName(), &shader);
 			meshes[i].draw(&shader, texture[i]);
