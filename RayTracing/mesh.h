@@ -18,7 +18,7 @@
 class mesh
 {
 public:
-	mesh(string mtlNamep);
+	mesh(string mtlNamep, string objNamep);
 	void createMesh(vector<GLfloat> vObj, vector<GLfloat> vNormais, vector<GLfloat> vTexturas, vector<GLuint> iNormais, vector<GLuint> iObj, vector<GLuint> iTexturas);
 	void bindMesh();
 	int bindTexture(vector<mtl> mtls, Shader* shader);
@@ -26,6 +26,7 @@ public:
 	string getMTLName();
 	void terminate();
 	vector<GLfloat> getVO();
+	string getObjName();
 	~mesh();
 
 private:
@@ -45,5 +46,6 @@ private:
 	GLuint EBOn; //normals
 	GLuint EBOt; //textures
 	string mtlName;
+	string objName;
 };
 

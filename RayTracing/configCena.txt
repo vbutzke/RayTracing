@@ -29,8 +29,44 @@ transformations
 
 //------- Objects and Animations --------------------//
 //name nameMTL rotation/continuous? translation/continuous? scale/continuous? animation
-objects
+object
 Pikachus/Pikachu.obj
 Pikachus/Pikachu.mtl
+
+object
+obj/cat.obj
+#
+
+object
+obj/dog.obj
+#
+
+//object
+//obj/cube.obj
+//#
+
+//object
+//obj/apple.obj
+//#
+
+//object
+//obj/elephant.obj
+//#
+
+//object
+//obj/moto.obj
+//#
+
+//object
+//obj/spheretri.obj
+//#
+
+//object
+//obj/venus.obj
+//#
+
+//object
+//obj/yoda.obj
+//#
 
 //-------------------------------------------------- //

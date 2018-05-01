@@ -73,6 +73,7 @@ void model::draw(scene scene){
 	GLFWwindow* window = init();
 	GLvoid* pixels;
 	RayTracing renderer;
+	string objName = "";
 
 	Shader shader("../shaders/lighting.vs", "../shaders/lighting.frag");
 
@@ -146,16 +147,27 @@ void model::draw(scene scene){
 
 		for (int i = 0; i < WIDTH; i++) {
 			for (int j = 0; j < HEIGHT; j++) {
-				glm::vec3 pixelColor = glm::vec3(1.0f, 1.0f, 1.0f);;
+				glm::vec3 pixelColor = glm::vec3(1.0f, 1.0f, 1.0f);
 				GLint pixelColorLoc = glGetUniformLocation(shader.Program, "pixelColor");
-				//glm::vec3 rayDirection = glm::vec3((float)i, (float)j, INFINITY);
+				glm::vec3 rayDirection = glm::vec3((float)i, (float)j, INFINITY);
 				//renderer.render(rayOrigin, rayDirection, pixelColor, meshes, recursion);
 				glUniform3f(pixelColorLoc, pixelColor.x, pixelColor.y, pixelColor.z); //é pra desenhar...
 			}
 		}
 		
+		objName = meshes[0].getObjName();
+		glm::vec3 translationRate = glm::vec3(0.0f, 0.0f, 0.0f);
 		for (size_t i = 0; i < meshes.size(); i++) {
 			performMtlLightning(meshes[i].getMTLName(), &shader);
+			
+			if (objName != meshes[i].getObjName()) {
+				objName = meshes[i].getObjName();
+				translationRate = glm::vec3(translationRate.x + -3.5f, translationRate.y + -2.2f, translationRate.z + -4.5f);
+			} 
+
+			model = glm::translate(model, translationRate);
+			glUniformMatrix4fv(modelLoc, 1, GL_FALSE, glm::value_ptr(model));
+
 			meshes[i].draw(&shader, texture[i]);
 		}
 

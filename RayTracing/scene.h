@@ -46,6 +46,7 @@ public:
 	void setTranslation(glm::vec3 nTrans);
 	void setScale(glm::vec3 nScale);
 	void setObjects(vector<obj> objs);
+	void addObject(obj object);
 
 private:
 	string fileName;

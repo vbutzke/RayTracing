@@ -90,13 +90,13 @@ scene SceneReader::readConfigFile(string filename, model* modelObj) {
 			scene.setScale(glm::vec3(first, second, third));
 		}
 
-		if (token[i] == "objects") {
-			vector<obj> temp = scene.getObjects();
+		if (token[i] == "object") {
 			obj nobj;
 			nobj.setName(token[++i]);
-			nobj.setMTLname(token[++i]);
-			temp.push_back(nobj);
-			scene.setObjects(temp);
+			if (token[++i] != "#") {
+				nobj.setMTLname(token[i]);
+			}
+			scene.addObject(nobj);
 		}
 
 		//animação
@@ -122,6 +122,8 @@ void SceneReader::read(string fileName, model* modelObj) {
 	int posSec;   //segunda barra da face
 	string material;
 	bool readPrvsF = false;
+	bool hasMTLflag = false;
+	bool hasNormalFlag = false;
 
 	vector<GLfloat> verticesObj;
 	vector<GLfloat> verticesNormais;
@@ -140,6 +142,7 @@ void SceneReader::read(string fileName, model* modelObj) {
 			verticesNormais.push_back(::atof(obj[++i].c_str()));
 			verticesNormais.push_back(::atof(obj[++i].c_str()));
 			verticesNormais.push_back(::atof(obj[++i].c_str()));
+			hasNormalFlag = true;
 		}
 		if (obj[i] == "vt") {
 			verticesTexturas.push_back(::atof(obj[++i].c_str()));
@@ -165,7 +168,7 @@ void SceneReader::read(string fileName, model* modelObj) {
 		if ((next >= obj.size()) || (next<obj.size() && obj[next] == "v")) {
 			if (readPrvsF) {
 				readPrvsF = false;
-				mesh mesh(material);
+				mesh mesh(material, fileName);
 				mesh.createMesh(verticesObj, verticesNormais, verticesTexturas, indicesNormais, indicesObj, indicesTexturas);
 				modelObj->addMesh(mesh);
 			}
@@ -173,6 +176,25 @@ void SceneReader::read(string fileName, model* modelObj) {
 		if (obj[i] == "usemtl") {
 			material = obj[++i];
 			readPrvsF = true;
+			hasMTLflag = true;
+		}
+	}
+
+	if (!hasNormalFlag || !hasMTLflag) {
+		if ((!hasNormalFlag && !hasMTLflag)) {
+			mesh mesh("No normal vectors or textures", fileName);
+			mesh.createMesh(verticesObj, verticesObj, verticesObj, indicesObj, indicesObj, indicesObj);
+			modelObj->addMesh(mesh);
+		} else if (!hasNormalFlag) {
+			//object does not have normal vectors
+			mesh mesh("No normal", fileName);
+			mesh.createMesh(verticesObj, verticesObj, verticesTexturas, indicesObj, indicesObj, indicesTexturas);
+			modelObj->addMesh(mesh);
+		} else {
+			//object does not have textures and therefore, no meshes
+			mesh mesh("No textures", fileName);
+			mesh.createMesh(verticesObj, verticesNormais, verticesObj, indicesNormais, indicesObj, indicesObj);
+			modelObj->addMesh(mesh);
 		}
 	}
 }

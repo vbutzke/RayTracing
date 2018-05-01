@@ -103,6 +103,10 @@ void scene::setObjects(vector<obj> objs) {
 	objects = objs;
 }
 
+void scene::addObject(obj object) {
+	objects.push_back(object);
+}
+
 void scene::setFileName(string nFileName) {
 	fileName = nFileName;
 }

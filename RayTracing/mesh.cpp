@@ -1,7 +1,8 @@
 #include "mesh.h"
 
-mesh::mesh(string mtlNamep) {
+mesh::mesh(string mtlNamep, string objNamep) {
 	mtlName = mtlNamep;
+	objName = objNamep;
 }
 
 void mesh::createMesh(vector<GLfloat> vObj, vector<GLfloat> vNormais, vector<GLfloat> vTexturas, vector<GLuint> iNormais, vector<GLuint> iObj, vector<GLuint> iTexturas) {
@@ -97,7 +98,6 @@ void mesh::draw(Shader* shader, int texture){
 	glBindVertexArray(VAO);
 	glDrawElements(GL_TRIANGLES, io.size(), GL_UNSIGNED_INT, 0);
 	glBindVertexArray(0);
-
 }
 
 string mesh::getMTLName() {
@@ -113,6 +113,10 @@ void mesh::terminate() {
 
 vector<GLfloat> mesh::getVO() {
 	return vo;
+}
+
+string mesh::getObjName() {
+	return objName;
 }
 
 mesh::~mesh()
