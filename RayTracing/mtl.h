@@ -15,7 +15,8 @@
 class mtl
 {
 public:
-	mtl(string namep, GLfloat Nsp, GLfloat Nip, GLfloat dp, GLfloat Tfp[3], GLfloat illump, GLfloat Kap[3], GLfloat Kdp[3], GLfloat Ksp[3], string map_Kdp);
+	mtl();
+	mtl(string namep, GLfloat Nsp, GLfloat Nip, GLfloat dp, GLfloat Tfp[3], GLfloat illump, GLfloat Kap[3], GLfloat Kdp[3], GLfloat Ksp[3], string map_Kdp, int sharpnessp);
 	string getName();
 	GLfloat getNs();
 	GLfloat getNi();
@@ -25,6 +26,7 @@ public:
 	GLfloat* getKa();
 	GLfloat* getKd();
 	GLfloat* getKs();
+	int getSharpness();
 	string getMap_Kd();
 	~mtl();
 	
@@ -38,6 +40,7 @@ private:
 	GLfloat Ka[3];
 	GLfloat Kd[3];
 	GLfloat Ks[3];
+	int sharpness;
 	string map_Kd;
 };
 

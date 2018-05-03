@@ -34,12 +34,16 @@ Pikachus/Pikachu.obj
 Pikachus/Pikachu.mtl
 
 object
-obj/cat.obj
-#
+Pikachus/Pikachu1.obj
+Pikachus/Pikachu1.mtl
 
-object
-obj/dog.obj
-#
+//object
+//obj/cat.obj
+//#
+
+//object
+//obj/dog.obj
+//#
 
 //object
 //obj/cube.obj

@@ -20,6 +20,7 @@ public:
 
 private:
 	GLuint loadTexture();
+	void generateColorAsMipmap();
 	void generateMipmap(const char* path);
 };
 

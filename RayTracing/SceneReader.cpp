@@ -212,6 +212,7 @@ void SceneReader::readMTL(string fileName, model* modelObj) {
 	string name, map_Kd;
 	GLfloat Ns, Ni, d, illum;
 	GLfloat Tf[3], Ka[3], Kd[3], Ks[3];
+	int sharpness;
 	bool readPrvsTexture = false;
 
 	for (int i = 0; i < obj.size(); i++) {
@@ -250,6 +251,9 @@ void SceneReader::readMTL(string fileName, model* modelObj) {
 			Ks[1] = ::atof(obj[++i].c_str());
 			Ks[2] = ::atof(obj[++i].c_str());
 		}
+		if (obj[i] == "sharpness") {
+			sharpness = atoi(obj[++i].c_str());
+		}
 		if (obj[i] == "map_Kd") {
 			map_Kd = obj[++i];
 			readPrvsTexture = true;
@@ -258,10 +262,11 @@ void SceneReader::readMTL(string fileName, model* modelObj) {
 		next++;
 		if ((next >= obj.size()) || (next < obj.size() && obj[next] == "newmtl")) {
 			if (readPrvsTexture) {
-				mtl mtl(name, Ns, Ni, d, Tf, illum, Ka, Kd, Ks, map_Kd);
+				mtl mtl(name, Ns, Ni, d, Tf, illum, Ka, Kd, Ks, map_Kd, sharpness);
 				modelObj->addMTL(mtl);
 				readPrvsTexture = false;
 				Ns, Ni, d, illum = 0;
+				sharpness = 0;
 				name, map_Kd = "";
 				std::fill_n(Tf, 3, 0);
 				std::fill_n(Ka, 3, 0);

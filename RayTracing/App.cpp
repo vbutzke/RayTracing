@@ -34,10 +34,6 @@ int main() {
 
 	modelObj.draw(scene);
 
-	//read
-	//filters
-	//write
-
 	modelObj.terminate();
 	glfwTerminate();
 	return 0;

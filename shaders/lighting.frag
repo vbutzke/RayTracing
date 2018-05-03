@@ -40,7 +40,5 @@ void main()
         
     vec3 result = (ambient + diffuse + specular) * objectColor * pixelColor;
     color = texture(texture1, TextCoord) * vec4(result, 1.0f);
-
-
 } 
 

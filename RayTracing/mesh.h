@@ -18,6 +18,7 @@
 class mesh
 {
 public:
+	mesh();
 	mesh(string mtlNamep, string objNamep);
 	void createMesh(vector<GLfloat> vObj, vector<GLfloat> vNormais, vector<GLfloat> vTexturas, vector<GLuint> iNormais, vector<GLuint> iObj, vector<GLuint> iTexturas);
 	void bindMesh();

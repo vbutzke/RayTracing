@@ -1,6 +1,10 @@
 #include "mtl.h"
 
-mtl::mtl(string namep, GLfloat Nsp, GLfloat Nip, GLfloat dp, GLfloat Tfp[3], GLfloat illump, GLfloat Kap[3], GLfloat Kdp[3], GLfloat Ksp[3], string map_Kdp) {
+mtl::mtl() {
+
+}
+
+mtl::mtl(string namep, GLfloat Nsp, GLfloat Nip, GLfloat dp, GLfloat Tfp[3], GLfloat illump, GLfloat Kap[3], GLfloat Kdp[3], GLfloat Ksp[3], string map_Kdp, int sharpnessp) {
 	name = namep;
 	Ns = Nsp;
 	Ni = Nip;
@@ -23,6 +27,8 @@ mtl::mtl(string namep, GLfloat Nsp, GLfloat Nip, GLfloat dp, GLfloat Tfp[3], GLf
 	Ks[0] = Ksp[0];
 	Ks[1] = Ksp[1];
 	Ks[2] = Ksp[2];
+
+	sharpness = sharpnessp;
 
 	map_Kd = map_Kdp;
 }
@@ -61,6 +67,10 @@ GLfloat* mtl::getKd(){
 
 GLfloat* mtl::getKs(){
 	return Ks;
+}
+
+int mtl::getSharpness() {
+	return sharpness;
 }
 
 string mtl::getMap_Kd(){

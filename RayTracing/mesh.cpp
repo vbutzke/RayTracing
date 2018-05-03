@@ -1,5 +1,9 @@
 #include "mesh.h"
 
+mesh::mesh() {
+
+}
+
 mesh::mesh(string mtlNamep, string objNamep) {
 	mtlName = mtlNamep;
 	objName = objNamep;
@@ -75,13 +79,19 @@ int mesh::bindTexture(vector<mtl> mtls, Shader* shader) {
 	int i = 0;
 	textures texture;
 	int textureBind = 0;
+	bool hasMTL = false;
 
 	while (i<mtls.size()) {
 		if (getMTLName() == mtls[i].getName()) {
 			textureBind = texture.createTexture(mtls[i].getMap_Kd().c_str());
+			hasMTL = true;
 			break;
 		}
 		i++;
+	}
+
+	if (!hasMTL) {
+		textureBind = texture.createTexture(NULL);
 	}
 
 	glActiveTexture(GL_TEXTURE0);

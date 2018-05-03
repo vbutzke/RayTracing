@@ -7,7 +7,13 @@ textures::textures()
 
 GLuint textures::createTexture(const char* path) {
 	GLuint tex = loadTexture();
-	generateMipmap(path);
+
+	if (path == NULL) { //(path != NULL) && (path[0] == '\0')) {
+		generateColorAsMipmap();
+	} else {
+		generateMipmap(path);
+	}
+
 	return tex;
 }
 
@@ -22,6 +28,17 @@ GLuint textures::loadTexture() {
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
 	return texture1;
+}
+
+
+void textures::generateColorAsMipmap() {
+
+	//int* rgb = 0xFF | (0xFF << 8) | (0x7F << 16) | (0x4F << 24);
+	// 1.0f, 0.5f, 0.31f (255, 127.5, 79.05)
+	//glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, 1000, 1000, 0, GL_RGB, GL_UNSIGNED_INT, rgb);
+	//glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, widthIm, heightIm, 0, GL_RGB, GL_UNSIGNED_BYTE, image);
+	//glGenerateMipmap(GL_TEXTURE_2D);
+	glBindTexture(GL_TEXTURE_2D, 0);
 }
 
 void textures::generateMipmap(const char* path) {

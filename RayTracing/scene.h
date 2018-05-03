@@ -71,7 +71,6 @@ private:
 	glm::vec3 scale;
 
 	//objetos
-	//obj* objects;
 	vector<obj> objects;
 };
 
