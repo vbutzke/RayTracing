@@ -143,7 +143,6 @@ void model::draw(scene scene){
 		glUniformMatrix4fv(viewLoc, 1, GL_FALSE, glm::value_ptr(view));
 
 		glm::vec3 rayOrigin = glm::vec3(0.0f, 0.0f, -2.0f);
-		int recursion = 0;
 		objName = meshes[0].getObjName();
 		glm::vec3 translationRate = glm::vec3(0.0f, 0.0f, 0.0f);
 		for (size_t i = 0; i < meshes.size(); i++) {
@@ -154,11 +153,10 @@ void model::draw(scene scene){
 				translationRate = glm::vec3(translationRate.x + -3.5f, translationRate.y + -2.2f, translationRate.z + -4.5f);
 				model = glm::translate(model, translationRate);
 			} 
-
+			int recursion = 0;
 			glm::vec3 pixelColor = glm::vec3(1.0f, 1.0f, 1.0f);
 			GLint pixelColorLoc = glGetUniformLocation(shader.Program, "pixelColor");
-			//glm::vec3 rayDirection = glm::vec3((float)i, (float)i, 1.0f);//aqui
-			glm::vec3 rayDirection = glm::vec3(1.0f, 1.0f, 1.0f); //se são infinitos raios, pra computar o meu ponto a direção é igual a onde o ponto está
+			glm::vec3 rayDirection = glm::vec3((float)i, (float)i, 1.0f);
 			renderer.render(rayOrigin, rayDirection, pixelColor, meshes, mtls, recursion);
 			glUniform3f(pixelColorLoc, pixelColor.x, pixelColor.y, pixelColor.z);
 			glUniformMatrix4fv(modelLoc, 1, GL_FALSE, glm::value_ptr(model));

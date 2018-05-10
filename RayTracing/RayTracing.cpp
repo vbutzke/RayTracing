@@ -6,45 +6,44 @@ RayTracing::RayTracing()
 
 void RayTracing::render(glm::vec3 rayOrigin, glm::vec3 rayDirection, glm::vec3& color, vector<mesh> meshes, vector<mtl> mtls, int& recursion) {
 
-	glm::vec3 background = glm::vec3(1.0f, 1.0f, 1.0f);
-	glm::vec3 closestPoint = rayOrigin;
-	glm::vec3 smallestDist = glm::vec3(-1.0f, -1.0f, -1.0f); //distância nas 3 coordenadas. inicializa em -1 porque ninguém quer distância negativa aqui
+	string associatedMTL      = "";
+	int count                 = 0;
+	int currentMeshPosition   = 1;
+	glm::vec3 background      = glm::vec3(1.0f, 1.0f, 1.0f);
+	glm::vec3 closestPoint    = rayOrigin;
+	vector<GLfloat> initialVO = meshes[0].getVO();
+	GLfloat smallestDist	  = INFINITY;
+	glm::vec3 rayDir          = rayDirection;
 	glm::vec3 distance;
-	string associatedMTL = "";
-	int count = 0;
 	mtl currentMTL;
 	mesh currentMesh;
-	glm::vec3 rayDir; //substituindo o parâmetro
-
-	glm::vec3 a = glm::vec3(rayOrigin.x, 0.0f, rayOrigin.z);
-	glm::vec3 b = glm::vec3(rayOrigin.x + 1.0f, 0.0f, rayOrigin.z);
-	glm::vec3 c = glm::vec3(rayOrigin.x, rayOrigin.y, rayOrigin.z + 1.0f);
-	glm::vec3 planeN = (a - b) % (b - c);
-
+	
 	recursion++;
 
 	for (int i = 0; i < meshes.size(); i++) {
 		vector<GLfloat> vo = meshes[i].getVO();
 		for (int j = 0; j < vo.size(); j++) {
 			glm::vec3 point = glm::vec3(vo[j], vo[++j], vo[++j]);
-			float div = sqrt(pow((point.x - rayOrigin.x), 2) + pow((point.y - rayOrigin.y), 2));
-			
-			normalize(planeN);
-			rayDir = rayOrigin - (glm::dot(rayOrigin, planeN))*planeN;
-			//rayDir = glm::vec3((float)((point.x - rayOrigin.x)), (float)((point.y - rayOrigin.y)), 1.0f);
-	
-			if (intersect(rayOrigin, rayDirection, point, distance)) {
-				glm::vec3 comparison = glm::lessThanEqual(distance, smallestDist);
-				if (comparison.x && comparison.y && comparison.z) {
-					smallestDist = distance;
+			if (recursion == 1) { //first execution: ray direction needs to be manually calculated
+				rayDir = glm::vec3(point.x - rayOrigin.x, point.y - rayOrigin.y, point.z - rayOrigin.z);
+			}
+
+			if (intersect(rayOrigin, rayDir, point, distance)) {
+				GLfloat actualDistance = sqrt(pow(distance.x, 2)+pow(distance.y, 2)+pow(distance.z, 2));
+				if (actualDistance < smallestDist) {
+					smallestDist = actualDistance;
 					closestPoint = point;
 					associatedMTL = meshes[i].getMTLName();
 					currentMesh = meshes[i];
+					currentMeshPosition = i;
 				}
 			}
 		}
 	}
 
+	vector<mesh> newMeshes = meshes;
+	newMeshes.erase(newMeshes.begin()+(currentMeshPosition));
+	
 	while (count<mtls.size()) {
 		if (mtls[count].getName() == currentMesh.getMTLName()) {
 			currentMTL = mtls[count];
@@ -60,15 +59,17 @@ void RayTracing::render(glm::vec3 rayOrigin, glm::vec3 rayDirection, glm::vec3& 
 		glm::vec3 refraction;
 	
 		//Compute um raio para cada fonte de luz para checar por sombra(corO = ilumLocal() ou sombra)
-		
+		//tenho que traçar uma reta de um plano que é contrário a fonte de luz pra
+		//daí ver se intersecta com o objeto, se sim, ali tem sombra, se não, ali não tem sombra
+
 		if(currentMTL.getSharpness()>0) {
-			reflect(rayOrigin, rayDirection, closestPoint, reflection);
-			render(closestPoint, reflection, color, meshes, mtls, recursion);
+			reflect(rayOrigin, rayDir, closestPoint, reflection);
+			render(closestPoint, reflection, color, newMeshes, mtls, recursion);
 		}
 		
 		if (currentMTL.getNi() >= 1.0f) {
-			refract(rayOrigin, rayDirection, closestPoint, refraction);
-			render(closestPoint, refraction, color, meshes, mtls, recursion);
+			refract(rayOrigin, rayDir, closestPoint, refraction);
+			render(closestPoint, refraction, color, newMeshes, mtls, recursion);
 		}
 	
 		color = LerpRGB(LerpRGB(color, reflection, currentMTL.getD()), refraction, currentMTL.getD());
@@ -178,7 +179,7 @@ void RayTracing::reflect(glm::vec3 ray, glm::vec3 rayDir, glm::vec3 intersection
 void RayTracing::refract(glm::vec3 ray, glm::vec3 rayDir, glm::vec3 intersection, glm::vec3& refracted) {
 	glm::vec3 normal = glm::vec3(ray + rayDir * intersection); // point of intersection
 	normalize(normal);
-	float cosi = glm::dot(-normal, rayDir); // -nhit.dot(raydir);
+	float cosi = glm::dot(-normal, rayDir);
 	float k = 1.0f - 0.8f * 0.8f * (1.0f - cosi * cosi);
 
 	refracted = rayDir * 0.8f + normal * (0.8f *cosi - sqrt(k));
